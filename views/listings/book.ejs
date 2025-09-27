@@ -1,0 +1,158 @@
+<% layout("../layouts/boilerplate") %>
+<style>
+  .bus { display: flex; flex-direction: column; gap: 30px; }
+  .deck { border: 2px solid #ccc; padding: 10px; border-radius: 10px; }
+  .deck h3 { margin: 5px 0; }
+  .row { display: flex; gap: 10px; margin: 5px 0; }
+  .seat { width: 80px; height: 50px; border: 1px solid #999; border-radius: 6px; text-align: center; cursor: pointer; font-size: 14px; padding: 5px; }
+  .seat.booked { background: #ccc; cursor: not-allowed; color: #666; }
+  .seat.selected { background: green; color: white; }
+  .proceed-btn { margin-top: 15px; padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; }
+  .proceed-btn:hover { background: #0056b3; }
+  .date-btns button { margin-right: 10px; }
+</style>
+
+<div style="margin-bottom:15px;">
+  <label for="pickup">Pickup:</label>
+  <select name="pickup" id="pickup" class="form-control" required>
+    <% info.pickups.forEach(p => { %>
+      <option value="<%= p %>"><%= p %></option>
+    <% }) %>
+  </select>
+
+  <label for="drop" style="margin-top:10px;">Drop:</label>
+  <select name="drop" id="drop" class="form-control" required>
+    <% info.drops.forEach(d => { %>
+      <option value="<%= d %>"><%= d %></option>
+    <% }) %>
+  </select>
+
+  <label for="date" style="margin-top:10px;">Date:</label>
+  <input type="date" name="date" id="date" class="form-control" min="<%= new Date().toISOString().split('T')[0] %>" required>
+
+  <div class="date-btns mt-2">
+    <button type="button" id="todayBtn" class="btn btn-secondary btn-sm">Today</button>
+    <button type="button" id="tomorrowBtn" class="btn btn-secondary btn-sm">Tomorrow</button>
+  </div>
+</div>
+
+<div style="font-size:18px; margin-bottom:10px;">
+  <b>Available Seats:</b> <span id="availableSeats"><%= info.seats - info.bookedSeats.length %></span>
+</div>
+
+<div class="bus">
+  <!-- Lower Deck -->
+  <div class="deck lower-deck">
+    <h3>Lower Deck</h3>
+    <div class="row">
+      <% for(let i=1; i<=4; i++) { 
+           let seatId = 'L'+i;
+           let booked = info.bookedSeats.some(s => s.seatNumber === seatId);
+      %>
+        <div class="seat <%= booked ? 'booked' : '' %>" data-id="<%= seatId %>" data-price="<%= info.price %>">
+          ₹<%= info.price %>
+        </div>
+      <% } %>
+    </div>
+    <div class="row">
+      <% for(let i=5; i<=8; i++) { 
+           let seatId = 'L'+i;
+           let booked = info.bookedSeats.some(s => s.seatNumber === seatId);
+      %>
+        <div class="seat <%= booked ? 'booked' : '' %>" data-id="<%= seatId %>" data-price="<%= info.price %>">
+          ₹<%= info.price %>
+        </div>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Upper Deck -->
+  <div class="deck upper-deck">
+    <h3>Upper Deck</h3>
+    <div class="row">
+      <% for(let i=1; i<=4; i++) { 
+           let seatId = 'U'+i;
+           let booked = info.bookedSeats.some(s => s.seatNumber === seatId);
+      %>
+        <div class="seat <%= booked ? 'booked' : '' %>" data-id="<%= seatId %>" data-price="<%= info.price %>">
+          ₹<%= info.price %>
+        </div>
+      <% } %>
+    </div>
+    <div class="row">
+      <% for(let i=5; i<=8; i++) { 
+           let seatId = 'U'+i;
+           let booked = info.bookedSeats.some(s => s.seatNumber === seatId);
+      %>
+        <div class="seat <%= booked ? 'booked' : '' %>" data-id="<%= seatId %>" data-price="<%= info.price %>">
+          ₹<%= info.price %>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:20px; font-size:20px;">
+  <b>Selected Seats:</b> <span id="selectedSeats">None</span><br>
+  <b>Total Price:</b> ₹<span id="totalPrice">0</span>
+</div>
+
+<!-- Proceed Button -->
+<button type="button" class="proceed-btn" id="proceedBtn">Proceed</button>
+<a href="/home" class="btn btn-danger">Exit</a>
+
+<script>
+  const seats = document.querySelectorAll('.seat');
+  const selectedSeatsSpan = document.getElementById('selectedSeats');
+  const totalPriceSpan = document.getElementById('totalPrice');
+  const proceedBtn = document.getElementById('proceedBtn');
+  const pickupSelect = document.getElementById('pickup');
+  const dropSelect = document.getElementById('drop');
+  const dateField = document.getElementById('date');
+  const todayBtn = document.getElementById('todayBtn');
+  const tomorrowBtn = document.getElementById('tomorrowBtn');
+
+  let selectedSeats = [];
+  let totalPrice = 0;
+
+  seats.forEach(seat => {
+    seat.addEventListener('click', () => {
+      if (seat.classList.contains('booked')) return;
+      seat.classList.toggle('selected');
+      const seatId = seat.dataset.id;
+      const seatPrice = parseInt(seat.dataset.price);
+
+      if (seat.classList.contains('selected')) {
+        selectedSeats.push(seatId);
+        totalPrice += seatPrice;
+      } else {
+        selectedSeats = selectedSeats.filter(s => s !== seatId);
+        totalPrice -= seatPrice;
+      }
+
+      selectedSeatsSpan.textContent = selectedSeats.length > 0 ? selectedSeats.join(', ') : 'None';
+      totalPriceSpan.textContent = totalPrice;
+    });
+  });
+
+  proceedBtn.addEventListener('click', () => {
+    if (selectedSeats.length === 0) {
+      alert("Please select at least one seat.");
+      return;
+    }
+    const showId = "<%= info._id %>";
+    const url = `/show/${showId}/add-passenger?seats=${encodeURIComponent(selectedSeats.join(','))}&price=${totalPrice}&pickup=${encodeURIComponent(pickupSelect.value)}&drop=${encodeURIComponent(dropSelect.value)}&date=${dateField.value}`;
+    window.location.href = url;
+  });
+
+  todayBtn.addEventListener('click', () => {
+    const today = new Date().toISOString().split('T')[0];
+    dateField.value = today;
+  });
+
+  tomorrowBtn.addEventListener('click', () => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    dateField.value = tomorrow.toISOString().split('T')[0];
+  });
+</script>

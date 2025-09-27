@@ -1,0 +1,33 @@
+<% layout("../layouts/boilerplate") %>
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow p-4 text-center">
+        
+        <!-- Hidden initially -->
+        <h3 id="confirmationMessage" class="text-success mb-4" style="display: none;">
+          Booking Confirmed!
+        </h3>
+
+        <p><strong>Booking ID:</strong> <%= booking._id %></p>
+        <p><strong>Seats:</strong> <%= booking.Seats.join(", ") %></p>
+        <p><strong>Date:</strong> <%= booking.Date %></p>
+
+        <h5 class="mt-4 mb-3">Your QR Code</h5>
+        <div class="d-flex justify-content-center mb-4">
+          <img src="<%= qrCodeUrl %>" alt="Booking QR Code" style="max-width: 200px; height: 200px;">
+        </div>
+
+        <a href="/home" class="btn btn-danger btn-block">Exit</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Show the confirmation message after 5 seconds (5000 milliseconds)
+  setTimeout(() => {
+    document.getElementById('confirmationMessage').style.display = 'block';
+  }, 5000);
+</script>

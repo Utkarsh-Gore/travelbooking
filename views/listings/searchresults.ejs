@@ -1,0 +1,63 @@
+<% layout("../layouts/boilerplate") %>
+
+<style>
+  .bus-card {
+    border-radius: 15px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .bus-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+  }
+
+  .bus-card .card-body {
+    background: linear-gradient(135deg, #f8f9fa, #ffffff);
+    border-radius: 15px;
+  }
+
+  .card-title {
+    font-weight: 600;
+    color: #0d6efd;
+  }
+
+  .no-result {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #6c757d;
+  }
+</style>
+
+<div class="container my-5">
+  <h2 class="text-center mb-4 text-primary">🚌 Available Buses</h2>
+
+  <% if(infos.length === 0){ %>
+    <p class="text-center no-result">No buses found for this route.</p>
+  <% } else { %>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <% for(let info of infos){ %>
+        <div class="col">
+          <div class="card h-100 bus-card shadow-sm">
+            <div class="card-body text-center">
+              <h5 class="card-title"><%= info.operator %></h5>
+              <hr>
+              <p class="card-text"><strong>From:</strong><b> <%= info.from %></b></p>
+              <p class="card-text"><strong>To:</strong> <b><%= info.to %></b></p>
+              <p class="card-text"><strong>Departure:</strong> <b><%= info.departure %></b></p>
+              <p class="card-text"><strong>Price:</strong> 
+                <span class="badge bg-success">₹<b><%= info.price %></b></span>
+              </p>
+              <p class="card-text"><strong>Available Seats:</strong><b><%= info.seats %></b></p>
+             <div class="d-flex justify-content-around mt-3">
+                <a href="/show/<%= info._id %>" class="btn btn-outline-secondary btn-sm">See Details</a>
+                <a href="/show/<%= info._id%>/book" class="btn btn-primary btn-sm">Book</a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  <% } %>
+</div>
+

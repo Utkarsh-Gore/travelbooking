@@ -1,0 +1,12 @@
+<% layout("../layouts/boilerplate") %>
+
+<h3>Payment</h3>
+<p><b>Seats:</b> <%= seats.join(", ") %></p>
+<p><b>Total Amount:</b> ₹<%= price %></p>
+<p><b>Pickup:</b> <%= pickup %></p>
+<p><b>Drop:</b> <%= drop %></p>
+<p><b>Date:</b> <%= date %></p>
+
+<form action="/show/<%= showId %>/confirm-booking" method="POST">
+  <button type="submit" class="btn btn-success">Pay Now</button>
+</form>

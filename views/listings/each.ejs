@@ -1,0 +1,39 @@
+<% layout("../layouts/boilerplate") %>
+<style>
+ 
+</style>
+<div class="container my-5 d-flex justify-content-center">
+  <div class="card shadow-lg" style="max-width: 40rem; width: 100%; border-radius: 15px;">
+    <div class="card-header text-center bg-primary text-white fw-bold fs-5 py-3">
+      🚌 <%= info.operator %>
+    </div>
+    <div class="card-body p-4">
+      <div class="row mb-3">
+        <div class="col-md-6 mb-2">
+          <p class="mb-1"><strong>From:</strong> <%= info.from %></p>
+          <p class="mb-1"><strong>To:</strong> <%= info.to %></p>
+        </div>
+        <div class="col-md-6 mb-2">
+          <p class="mb-1"><strong>Duration:</strong> <%= info.duration %> hrs</p>
+          <p class="mb-1"><strong>Departure:</strong> <%= info.departure %></p>
+        </div>
+      </div>
+      <hr>
+      <div class="row mb-3">
+        <div class="col-md-6 mb-2">
+          <p class="mb-1"><strong>Price:</strong> 
+            <span class="badge bg-success fs-6">₹<%= info.price %></span>
+          </p>
+        </div>
+        <div class="col-md-6 mb-2">
+          <p class="mb-1"><strong>Seats Available:</strong> <%= info.seats %></p>
+        </div>
+      </div>
+     <div class="d-flex justify-content-center gap-3">
+  <a href="/show/<%= info._id %>/book" class="btn btn-lg btn-success px-5" id="b1">Book</a>
+  <a href="/show" class="btn btn-lg btn-danger px-5" id="b2">Exit</a>
+</div>
+
+    </div>
+  </div>
+</div>

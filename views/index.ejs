@@ -1,0 +1,131 @@
+<% layout("../layouts/boilerplate") %>
+
+<style>
+  /* Hero Section Styling */
+  .hero-section {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://img.cdn.itspl.net/cdn/B2C_RT/VRL/NewDesignImage/images/buscharter.png?d=1.0.0.1');
+    background-size: cover;
+    background-position: center;
+    padding: 6rem 0;
+    color: white;
+  }
+
+  /* Custom style for a subtle card hover effect */
+  .offer-card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+
+  .offer-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15) !important;
+  }
+</style>
+
+<div class="hero-section text-center">
+  <div class="container">
+    <h1 class="display-4 fw-bold">Your Journey, Your Way</h1>
+    <p class="lead mb-5">Search and book bus tickets to any destination in India.</p>
+
+    <div class="card p-4 shadow-lg">
+      <form action="/search" method="GET" class="row g-3 align-items-end">
+        
+        <div class="col-lg-3 col-md-6 text-start">
+          <label for="fromInput" class="form-label fw-semibold"><i class="fa-solid fa-location-dot me-2"></i>From</label>
+          <input type="text" id="fromInput" name="from" placeholder="Starting location" class="form-control form-control-lg" required>
+        </div>
+
+        <div class="col-lg-3 col-md-6 text-start">
+          <label for="toInput" class="form-label fw-semibold"><i class="fa-solid fa-location-dot me-2"></i>To</label>
+          <input type="text" id="toInput" name="to" placeholder="Destination" class="form-control form-control-lg" required>
+        </div>
+
+        <div class="col-lg-4 col-md-6 text-start">
+          <label for="dateInput" class="form-label fw-semibold"><i class="fa-solid fa-calendar-days me-2"></i>Date of Journey</label>
+          <div class="input-group">
+            <input 
+              type="date" 
+              id="dateInput" 
+              name="date" 
+              class="form-control form-control-lg" 
+              min="<%= new Date().toISOString().split('T')[0] %>" 
+              required
+            >
+            <button type="button" class="btn btn-outline-secondary" id="todayBtn">Today</button>
+            <button type="button" class="btn btn-outline-secondary" id="tomorrowBtn">Tomorrow</button>
+          </div>
+        </div>
+        
+        <div class="col-lg-2 col-md-6 d-grid">
+          <button type="submit" class="btn btn-danger btn-lg fw-bold">
+            <i class="fa-solid fa-magnifying-glass me-1"></i> Search
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="container my-5">
+  <h2 class="text-center fw-bold mb-2">Exclusive Offers & Deals</h2>
+  <p class="text-center text-muted mb-4">Save more on your next trip with our special offers.</p>
+  <hr class="w-50 mx-auto mb-5">
+
+  <div class="row">
+    <div class="col-lg-4 col-md-6 mb-4">
+      <a href="/dus" class="text-decoration-none text-dark">
+        <div class="card shadow-sm h-100 offer-card">
+          <img src="https://assetscdn1.paytm.com/images/catalog/view_item/1942488/25908701224804093.jpg" class="card-img-top" alt="Dussehra Offer">
+          <div class="card-body text-center">
+            <h5 class="card-title text-success">Celebration Dussehra</h5>
+            <p class="card-text">Enjoy festive discounts on popular routes.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-lg-4 col-md-6 mb-4">
+      <a href="/home" class="text-decoration-none text-dark">
+        <div class="card shadow-sm h-100 offer-card">
+          <img src="https://assetscdn1.paytm.com/images/catalog/view_item/3031209/9682821818926336.jpg" class="card-img-top" alt="Subscription Info">
+          <div class="card-body text-center">
+            <h5 class="card-title text-primary">Get Subscriptions</h5>
+            <p class="card-text">Subscribe and get exclusive travel perks and deals.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-lg-4 col-md-6 mb-4">
+      <a href="https://cif.paytm.com/kyc/tnc/get/150002302" class="text-decoration-none text-dark">
+        <div class="card shadow-sm h-100 offer-card">
+          <img src="https://assetscdn1.paytm.com/images/catalog/view_item/1942492/1710315925900.jpg" class="card-img-top" alt="Cashback Offer">
+          <div class="card-body text-center">
+            <h5 class="card-title text-warning">Get 100% Cashback</h5>
+            <p class="card-text">A chance to win full cashback on your ticket.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const dateInput = document.getElementById("dateInput");
+  const today = new Date().toISOString().split("T")[0];
+  
+  // Set min attribute dynamically (already done in EJS, but good practice)
+  dateInput.setAttribute("min", today);
+
+  // Today button functionality
+  document.getElementById("todayBtn").addEventListener("click", () => {
+    dateInput.value = today;
+  });
+
+  // Tomorrow button functionality
+  document.getElementById("tomorrowBtn").addEventListener("click", () => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    dateInput.value = tomorrow.toISOString().split("T")[0];
+  });
+</script>

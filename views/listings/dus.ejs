@@ -1,0 +1,140 @@
+<% layout("../layouts/boilerplate") %>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #ffffff;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        header img {
+            height: 40px;
+        }
+
+        header nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #0070f3;
+            font-weight: 500;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 50px 20px;
+        }
+
+        .offer-card {
+            background-color: #ffb600;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 600px;
+            text-align: center;
+            color: #000;
+            position: relative;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .offer-card img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+
+        .offer-card h1 {
+            font-size: 28px;
+            margin: 15px 0;
+        }
+
+        .offer-card p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .promo-code {
+            background-color: #000;
+            color: #fff;
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .tnc {
+            max-width: 600px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .book-btn {
+            display: inline-block;
+            background-color: #00aaff;
+            color: #fff;
+            padding: 15px 40px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        footer a {
+            color: #0070f3;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+    </style>
+
+<body>
+
+    <main>
+        <div class="offer-card">
+            <h1>Up to 20% off this Dussehra</h1>
+            <p>Safar.com Travel Bus Festive Sale <br> 22-29 Sept</p>
+            <div class="promo-code">Promo: CELEBRATION20</div>
+        </div>
+
+        <div class="tnc">
+            <strong>Terms & Conditions</strong>
+            <ul>
+                <li>Use code CELEBRATION20 on bus ticket booking to get 20% instant discount up to Rs 120.</li>
+                <li>Minimum order value for bus ticket booking is Rs.400.</li>
+                <li>This offer is valid for selected users only.</li>
+                <li>This offer is valid once per user.</li>
+                <li>Offer is not applicable on government buses.</li>
+                <li>Offer is applicable for selected operators only.</li>
+                <li>Instant discount calculated is exclusive of the insurance amount.</li>
+                <li>To avail discount, the user needs to have a verified mobile number on Paytm.</li>
+                <li>Cancelled orders are not eligible for instant discount.</li>
+                <li>Paytm reserves its absolute right to withdraw and/or alter any terms and conditions of the offer at any time without prior notice.</li>
+            </ul>
+        </div>
+
+        <a href="/show" class="book-btn">Book Now</a>
+    </main>
+</body>
+

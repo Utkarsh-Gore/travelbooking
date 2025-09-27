@@ -1,0 +1,100 @@
+<% layout("../layouts/boilerplate") %>
+
+<style>
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.bus-card {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    transition: transform 0.2s, box-shadow 0.2s;
+    background-color: #fff;
+}
+
+.bus-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.card-title {
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 4px;
+}
+a{
+  text-decoration: none;
+}
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 6px 15px;
+    border-radius: 5px;
+    font-size: 0.85rem;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-outline-secondary {
+    border-color: #007bff;
+    color: #007bff;
+    padding: 6px 15px;
+    border-radius: 5px;
+    font-size: 0.85rem;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+h2.text-center {
+    color: #007bff;
+    margin-bottom: 25px;
+}
+
+.card-img-top {
+    max-height: 150px;
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+}
+</style>
+
+<div class="container my-5">
+  <h2 class="text-center">Popular Routes</h2>
+  
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <% for(let info of infos){ %>
+      <div>
+      <a href="/show/<%= info._id %>">
+      <div class="col">
+        <div class="card h-100 bus-card">
+          <div class="card-body text-center">
+            <h5 class="card-title"><%= info.operator %></h5>
+            <p class="card-text"><strong>From:</strong> <B><%= info.from %></B></p>
+            <p class="card-text"><strong>To:</strong><b><%= info.to %></b></p>
+
+            <div class="d-flex justify-content-around mt-2">
+              <a href="/show/<%= info._id %>" class="btn btn-outline-secondary btn-sm">See Details</a>
+              <a href="/show/<%= info._id %>/book" class="btn btn-outline-secondary btn-sm">Book</a>
+             
+            </div>
+
+          </div>
+        </div>
+      </div>
+      </a>
+      </div>
+    <% } %>
+  </div>
+</div>
+

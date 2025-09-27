@@ -1,0 +1,53 @@
+<% layout("../layouts/boilerplate") %>
+
+<form id="bookingForm" action="/show/<%= showId %>/payment" method="POST">
+
+  <!-- Booking Info Card -->
+  <div class="card shadow mb-3">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">Booking Information</h5>
+    </div>
+    <div class="card-body">
+      <p><b>Selected Seats:</b> <%= Array.isArray(seats) ? seats.join(", ") : seats %></p>
+      <p><b>Total Price:</b> ₹<%= price %></p>
+      <p><b>Pickup:</b> <%= pickup %></p>
+      <p><b>Drop:</b> <%= drop %></p>
+      <p><b>Date:</b> <%= date %></p>
+    </div>
+  </div>
+
+  <!-- Passenger Details Card -->
+  <div class="card shadow mb-3">
+    <div class="card-header bg-secondary text-white">
+      <h5 class="mb-0">Passenger Details</h5>
+    </div>
+    <div class="card-body">
+      <div class="row mb-2">
+        <div class="col-md-4">
+          <input type="text" name="name[]" class="form-control" placeholder="Name" required>
+        </div>
+        <div class="col-md-4">
+          <input type="number" name="age[]" class="form-control" placeholder="Age" required>
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="contact[]" class="form-control" placeholder="Contact" required>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden fields -->
+<input type="hidden" name="seats" value="<%= Array.isArray(seats) ? seats.join(',') : seats %>">
+  <input type="hidden" name="price" value="<%= price %>">
+  <input type="hidden" name="pickup" value="<%= pickup %>">
+  <input type="hidden" name="drop" value="<%= drop %>">
+  <input type="hidden" name="date" value="<%= date %>">
+
+  <!-- Link styled as button to submit form -->
+  <div class="d-flex justify-content-end">
+    <a href="#" class="btn btn-success" 
+       onclick="document.getElementById('bookingForm').submit(); return false;">
+       Proceed to Payment
+    </a>
+  </div>
+</form>
